@@ -35,6 +35,10 @@ void Camera::Update()
 	D3DXMATRIXA16 matRotationX, matRotationY;
 	D3DXMATRIXA16 matRotation;
 	D3DXMatrixRotationX(&matRotationX, camRotX);
+	if (camRotYTarget)
+	{
+		camRotY = (*camRotYTarget);
+	}
 	D3DXMatrixRotationY(&matRotationY, camRotY);
 	matRotation = matRotationX * matRotationY;
 

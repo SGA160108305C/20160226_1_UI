@@ -22,11 +22,24 @@ void GameState_UI::Initialize()
 	}	
 	if ( girl == nullptr )
 	{
-		girl = new Character_MouseMove;
+		girl = new Character_Collision;
 		girl->Initialize();			
-		girl->SetGrid(grid);
 	}
 	
+	if (sphere == nullptr)
+	{
+		sphere = new Collider_Sphere;
+		sphere->Initialize(D3DXVECTOR3(10, 0, 0), 3.0f);
+		sphere->SetMaterialColor(D3DXCOLOR(0, 1, 0, 1));
+	}
+
+	if (box == nullptr)
+	{
+		box = new Collider_Box;
+		box->Initialize(D3DXVECTOR3(-10, 0, 0), D3DXVECTOR3(-9, 1, 1));
+		box->SetMaterialColor(D3DXCOLOR(0, 0, 1, 1));
+	}
+
 	D3DXVECTOR3 pos;
 	D3DXVECTOR2 size;
 
@@ -150,7 +163,9 @@ void GameState_UI::Initialize()
 }
 
 void GameState_UI::Destroy()
-{	
+{
+	SAFE_DELETE(box);
+	SAFE_DELETE(sphere);
 	SAFE_DELETE(girl);
 	SAFE_DELETE(grid);	
 }
@@ -161,11 +176,53 @@ void GameState_UI::Reset()
 
 void GameState_UI::Update()
 {
+	if ((GetAsyncKeyState('1') & 0x8000) != 0)
+	{
+		setViewType(GameState_UI::TOP);
+		isCameraSet = false;
+	}
+	else if ((GetAsyncKeyState('2') & 0x8000) != 0)
+	{
+		setViewType(GameState_UI::FPS);
+		isCameraSet = false;
+	}
+
+	if (viewType == GameState_UI::FPS)
+	{
+		if (isCameraSet == false)
+		{
+			GameManager::GetCamera()->SetDistance(3.0f);
+			GameManager::GetCamera()->setCamRotY(girl->getRotationAngleAddress());
+		}
+
+		isCameraSet = true;
+	}
+
+	else
+	{
+		if (isCameraSet == false)
+		{
+			GameManager::GetCamera()->setCamRotY(nullptr);
+			GameManager::GetCamera()->SetDistance(20.0f);
+		}
+		
+		isCameraSet = true;
+	}
+
 	if ( girl )
 	{
 		girl->Update();
 	}
 
+	if (sphere)
+	{
+		sphere->Update();
+	}
+
+	if (box)
+	{
+		box->Update();
+	}
 }
 
 void GameState_UI::Render()
@@ -174,17 +231,29 @@ void GameState_UI::Render()
 	{
 		grid->Render();
 	}
+
 	if ( girl )
 	{
 		girl->Render();
 	}
 
+	if (sphere)
+	{
+		sphere->Render();
+	}
+
+	if (box)
+	{
+		box->Render();
+	}
 }
 
 void GameState_UI::OnEnterState()
 {
 	GameManager::GetCamera()->SetDistance(20.0f);
 	Initialize();
+
+	GameManager::GetCamera()->SetLookTarget(girl->GetPositionAdress());
 }
 
 void GameState_UI::OnLeaveState()

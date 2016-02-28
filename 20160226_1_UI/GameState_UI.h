@@ -11,6 +11,12 @@ class GameState_UI :
 	public GameState
 {
 public:
+	enum ViewType
+	{
+		FPS,
+		TOP
+	};
+
 	GameState_UI();
 	virtual ~GameState_UI();
 
@@ -24,10 +30,17 @@ public:
 	virtual void OnLeaveState() override;
 
 	virtual LRESULT InputProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) override;
+	void setViewType(GameState_UI::ViewType type) { viewType = type; }
 
 protected:
 	Grid* grid = nullptr;
-	Character_MouseMove* girl = nullptr;
+	Character_Collision* girl = nullptr;
+
+	Collider_Sphere* sphere = nullptr;
+	Collider_Box* box = nullptr;
+
+	ViewType viewType = GameState_UI::TOP;
+	bool isCameraSet = false;
 
 };
 

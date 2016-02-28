@@ -17,6 +17,7 @@ public:
 	inline void SetDirection(const D3DXVECTOR3& dir){ direction = dir; }
 	inline void SetAngle(const float angle){ rotationAngle = angle; }
 	inline void SetAction(ActionBase* _action){ action = _action; }
+	inline float* getRotationAngleAddress() { return &rotationAngle; }
 	
 protected:
 	D3DXVECTOR3	position = D3DXVECTOR3(0, 0, 0);
