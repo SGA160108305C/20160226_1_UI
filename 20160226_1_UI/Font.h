@@ -7,6 +7,12 @@ private:
 	~Font();
 
 public :
+	enum FontType
+	{
+		HEADING,
+		BUTTON
+	};
+
 	static Font& Get()
 	{
 		static Font instance;
@@ -16,14 +22,27 @@ public :
 	void Initialize();
 	void Destroy();
 
-	static inline LPD3DXFONT GetFont(){ return Font::Get().GetInstanceFont(); }
+	static inline LPD3DXFONT GetFont(FontType type){ return Font::Get().GetInstanceFont(type); }
 
 protected:
-	LPD3DXFONT font = nullptr;
+	LPD3DXFONT fontHeading = nullptr;
+	LPD3DXFONT fontButton = nullptr;
 
-	inline LPD3DXFONT GetInstanceFont(){ return font; }
+	inline LPD3DXFONT GetInstanceFont(FontType type)
+	{
+		switch (type)
+		{
+		case Font::HEADING:
+			return fontHeading;
+			break;
+		case Font::BUTTON:
+			return fontButton;
+			break;
+		default:
+			break;
+		}
 
-	
-
+		return nullptr;
+	}
 };
 

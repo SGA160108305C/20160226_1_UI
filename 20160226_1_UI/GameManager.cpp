@@ -179,7 +179,7 @@ void GameManager::Render()
 	UI_Manager::Get().Render();
 
 	RECT rc = { 10, 10, 11, 11 };
-	Font::GetFont()->DrawTextA(
+	Font::GetFont(Font::HEADING)->DrawTextA(
 		NULL,
 		fpsText,
 		strlen(fpsText),

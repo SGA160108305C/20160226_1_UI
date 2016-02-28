@@ -17,6 +17,8 @@ public:
 	inline const D3DXMATRIXA16& GetWorld(){ return world; }
 	inline int GetID(){ return id; }
 	inline D3DXVECTOR2& GetSize(){ return size; }
+	inline D3DXVECTOR3& GetPosition(){ return position; }
+	inline std::vector<UI_Base*> getChildArray() { return childArray; }
 
 	inline void SetPosition(float x, float y, float z){ position = D3DXVECTOR3(x, y, z); }
 	inline void SetSize(float width, float height){ size.x = width; size.y = height; }

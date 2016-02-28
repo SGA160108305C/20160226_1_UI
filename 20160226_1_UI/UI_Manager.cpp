@@ -38,6 +38,12 @@ void UI_Manager::Render()
 	{
 		root->Render();
 	}
+
+	std::vector<UI_Base*> childArray = root->getChildArray();
+	for (auto iter = childArray.begin(); iter != childArray.end(); ++iter)
+	{
+		(*iter)->Render();
+	}
 }
 
 LRESULT UI_Manager::InputProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)

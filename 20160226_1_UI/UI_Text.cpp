@@ -25,5 +25,5 @@ void UI_Text::Render()
 			&rc, textFormat, textColor);
 	}
 
-	UI_Base::Render();
+	//UI_Base::Render();
 }

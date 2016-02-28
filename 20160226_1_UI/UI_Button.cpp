@@ -31,7 +31,7 @@ void UI_Button::Render()
 
 	UI_Manager::GetSprite()->End();
 
-	UI_Base::Render();
+	//UI_Base::Render();
 }
 
 LRESULT UI_Button::InputProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
