@@ -44,8 +44,10 @@ void GameState_UI::Initialize()
 	D3DXVECTOR2 size;
 
 	UI_Image* uiImage = new  UI_Image;
-	uiImage->SetTexture("./UI/panel-info.png");
-	uiImage->SetPosition(0, 0, 0);
+	uiImage->SetTexture("./UI/menu.png");
+	size = uiImage->GetSize();
+	pos = D3DXVECTOR3(RESOLUTION_X / 2 - size.x / 2, RESOLUTION_Y - size.y, 0);
+	uiImage->SetPosition(pos.x, pos.y, 0);
 	UI_Manager::Get().SetRoot(uiImage);
 
 	UI_Text* uiTextHeading = new UI_Text;
