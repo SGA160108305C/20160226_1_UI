@@ -43,123 +43,170 @@ void GameState_UI::Initialize()
 	D3DXVECTOR3 pos;
 	D3DXVECTOR2 size;
 
-	UI_Image* uiImage = new  UI_Image;
-	uiImage->SetTexture("./UI/menu.png");
-	size = uiImage->GetSize();
+	UI_Image* uiImageMain = new  UI_Image;
+	uiImageMain->SetTexture("./UI/menu.png");
+	size = uiImageMain->GetSize();
 	pos = D3DXVECTOR3(RESOLUTION_X / 2 - size.x / 2, RESOLUTION_Y - size.y, 0);
-	uiImage->SetPosition(pos.x, pos.y, 0);
-	UI_Manager::Get().SetRoot(uiImage);
+	uiImageMain->SetPosition(pos.x, pos.y, 0);
+	UI_Manager::Get().SetRoot(uiImageMain);
 
-	UI_Text* uiTextHeading = new UI_Text;
-	uiTextHeading->SetFont(Font::GetFont(Font::HEADING));
-	uiTextHeading->SetText("Choose Object");
-	pos = UI_Manager::Get().GetRoot()->GetPosition();
-	uiTextHeading->SetPosition(pos.x, pos.y + 80, pos.z);
-	size = UI_Manager::Get().GetRoot()->GetSize();
-	uiTextHeading->SetSize(size.x, 100);
-	uiTextHeading->SetTextColor(D3DCOLOR_XRGB(255, 255, 0));
-	uiTextHeading->SetTextFormat(DT_CENTER | DT_VCENTER);
-	uiImage->AddChild(uiTextHeading);
-
-	UI_Button* uiButton1 = new UI_Button;
-	uiButton1->SetTexture("./UI/btn-med-up.png", "./UI/btn-med-over.png", "./UI/btn-med-down.png");
-	pos = UI_Manager::Get().GetRoot()->GetPosition();
-	uiButton1->SetPosition(pos.x + 130, pos.y + 200, pos.z);
-	/*uiButton->OnClick = std::bind(
-		&UI_Functions::ClickTest,
-		std::ref(UI_Manager::Get().func)
-		);*/
-	uiButton1->OnClick = std::bind(
-		&UI_Functions::CloseTarget,
-		std::ref(UI_Manager::Get().func)
-		, uiTextHeading);
-	uiImage->AddChild(uiButton1);
-
-	UI_Button* uiButton2 = new UI_Button;
-	uiButton2->SetTexture("./UI/btn-med-up.png", "./UI/btn-med-over.png", "./UI/btn-med-down.png");
-	pos = UI_Manager::Get().GetRoot()->GetPosition();
-	uiButton2->SetPosition(pos.x + 130, pos.y + 260, pos.z);
+	UI_Button* uiButtonMain1 = new UI_Button;
+	uiButtonMain1->SetTexture("./UI/btn-option-up.png", "./UI/btn-option-over.png", "./UI/btn-option-down.png");
+	uiButtonMain1->SetPosition(110, 79, 0);
 	/*uiButton->OnClick = std::bind(
 	&UI_Functions::ClickTest,
 	std::ref(UI_Manager::Get().func)
 	);*/
-	uiButton2->OnClick = std::bind(
+	/*uiButtonMain1->OnClick = std::bind(
 		&UI_Functions::CloseTarget,
 		std::ref(UI_Manager::Get().func)
-		, uiTextHeading);
-	uiImage->AddChild(uiButton2);
+		, uiTextHeading);*/
+	uiImageMain->AddChild(uiButtonMain1);
 
-	UI_Button* uiButton3 = new UI_Button;
-	uiButton3->SetTexture("./UI/btn-med-up.png", "./UI/btn-med-over.png", "./UI/btn-med-down.png");
-	pos = UI_Manager::Get().GetRoot()->GetPosition();
-	uiButton3->SetPosition(pos.x + 130, pos.y + 320, pos.z);
+	UI_Button* uiButtonMain2 = new UI_Button;
+	uiButtonMain2->SetTexture("./UI/btn-quest-up.png", "./UI/btn-quest-over.png", "./UI/btn-quest-down.png");
+	uiButtonMain2->SetPosition(155, 79, 0);
 	/*uiButton->OnClick = std::bind(
 	&UI_Functions::ClickTest,
 	std::ref(UI_Manager::Get().func)
 	);*/
-	uiButton3->OnClick = std::bind(
+	/*uiButtonMain2->OnClick = std::bind(
 		&UI_Functions::CloseTarget,
 		std::ref(UI_Manager::Get().func)
-		, uiTextHeading);
-	uiImage->AddChild(uiButton3);
+		, uiTextHeading);*/
+	uiImageMain->AddChild(uiButtonMain2);
 
-	UI_Button* uiButton4 = new UI_Button;
-	uiButton4->SetTexture("./UI/btn-med-up.png", "./UI/btn-med-over.png", "./UI/btn-med-down.png");
-	pos = UI_Manager::Get().GetRoot()->GetPosition();
-	uiButton4->SetPosition(pos.x + 130, pos.y + 380, pos.z);
-	/*uiButton->OnClick = std::bind(
-	&UI_Functions::ClickTest,
-	std::ref(UI_Manager::Get().func)
-	);*/
-	uiButton4->OnClick = std::bind(
-		&UI_Functions::CloseTarget,
-		std::ref(UI_Manager::Get().func)
-		, uiTextHeading);
-	uiImage->AddChild(uiButton4);
-		
-	UI_Text* uiTextButton1 = new UI_Text;
-	uiTextButton1->SetFont(Font::GetFont(Font::BUTTON));
-	uiTextButton1->SetText("Sphere 1");
-	pos = uiButton1->GetPosition();
-	uiTextButton1->SetPosition(pos.x, pos.y, pos.z);
-	size = uiButton1->GetSize();
-	uiTextButton1->SetSize(size.x, size.y);
-	uiTextButton1->SetTextColor(D3DCOLOR_XRGB(255, 255, 0));
-	uiTextButton1->SetTextFormat(DT_CENTER | DT_VCENTER);
-	uiImage->AddChild(uiTextButton1);
+	UI_Image* uiImagePanelOption = new  UI_Image;
+	uiImagePanelOption->SetTexture("./UI/panel.png");
+	uiImagePanelOption->SetPosition(-pos.x, -500, 0);
+	uiImageMain->AddChild(uiImagePanelOption);
 
-	UI_Text* uiTextButton2 = new UI_Text;
-	uiTextButton2->SetFont(Font::GetFont(Font::BUTTON));
-	uiTextButton2->SetText("Sphere 2");
-	pos = uiButton2->GetPosition();
-	uiTextButton2->SetPosition(pos.x, pos.y, pos.z);
-	size = uiButton2->GetSize();
-	uiTextButton2->SetSize(size.x, size.y);
-	uiTextButton2->SetTextColor(D3DCOLOR_XRGB(255, 255, 0));
-	uiTextButton2->SetTextFormat(DT_CENTER | DT_VCENTER);
-	uiImage->AddChild(uiTextButton2);
+	UI_Text* uiTextOptionHeading = new UI_Text;
+	uiTextOptionHeading->SetFont(Font::GetFont(Font::HEADING));
+	uiTextOptionHeading->SetText("Choose Object");
+	uiTextOptionHeading->SetPosition(10, 30, 0);
+	size = uiImagePanelOption->GetSize();
+	uiTextOptionHeading->SetSize(size.x, 50);
+	uiTextOptionHeading->SetTextColor(D3DCOLOR_XRGB(255, 255, 0));
+	uiTextOptionHeading->SetTextFormat(DT_CENTER | DT_VCENTER);
+	uiImagePanelOption->AddChild(uiTextOptionHeading);
 
-	UI_Text* uiTextButton3 = new UI_Text;
-	uiTextButton3->SetFont(Font::GetFont(Font::BUTTON));
-	uiTextButton3->SetText("Box 1");
-	pos = uiButton3->GetPosition();
-	uiTextButton3->SetPosition(pos.x, pos.y, pos.z);
-	size = uiButton3->GetSize();
-	uiTextButton3->SetSize(size.x, size.y);
-	uiTextButton3->SetTextColor(D3DCOLOR_XRGB(255, 255, 0));
-	uiTextButton3->SetTextFormat(DT_CENTER | DT_VCENTER);
-	uiImage->AddChild(uiTextButton3);
+	UI_Button* uiButtonOptionBox1 = new UI_Button;
+	uiButtonOptionBox1->SetTexture("./UI/btn-box-up.png", "./UI/btn-box-over.png", "./UI/btn-box-down.png");
+	uiButtonOptionBox1->SetPosition(240, 85, 0);
+	uiImagePanelOption->AddChild(uiButtonOptionBox1);
 
-	UI_Text* uiTextButton4 = new UI_Text;
-	uiTextButton4->SetFont(Font::GetFont(Font::BUTTON));
-	uiTextButton4->SetText("Box 2");
-	pos = uiButton4->GetPosition();
-	uiTextButton4->SetPosition(pos.x, pos.y, pos.z);
-	size = uiButton4->GetSize();
-	uiTextButton4->SetSize(size.x, size.y);
-	uiTextButton4->SetTextColor(D3DCOLOR_XRGB(255, 255, 0));
-	uiTextButton4->SetTextFormat(DT_CENTER | DT_VCENTER);
-	uiImage->AddChild(uiTextButton4);
+	UI_Text* uiTextOptionBox1 = new UI_Text;
+	uiTextOptionBox1->SetFont(Font::GetFont(Font::BUTTON));
+	uiTextOptionBox1->SetText("Box No. 1");
+	uiTextOptionBox1->SetPosition(10, 0, 0);
+	size = uiButtonOptionBox1->GetSize();
+	uiTextOptionBox1->SetSize(size.x, size.y);
+	uiTextOptionBox1->SetTextColor(D3DCOLOR_XRGB(255, 0, 0));
+	uiTextOptionBox1->SetTextFormat(DT_CENTER | DT_VCENTER);
+	uiButtonOptionBox1->AddChild(uiTextOptionBox1);
+
+	UI_Button* uiButtonOptionBox2 = new UI_Button;
+	uiButtonOptionBox2->SetTexture("./UI/btn-box-up.png", "./UI/btn-box-over.png", "./UI/btn-box-down.png");
+	uiButtonOptionBox2->SetPosition(240, 135, 0);
+	uiImagePanelOption->AddChild(uiButtonOptionBox2);
+
+	UI_Text* uiTextOptionBox2 = new UI_Text;
+	uiTextOptionBox2->SetFont(Font::GetFont(Font::BUTTON));
+	uiTextOptionBox2->SetText("Box No. 2");
+	uiTextOptionBox2->SetPosition(10, 0, 0);
+	size = uiButtonOptionBox2->GetSize();
+	uiTextOptionBox2->SetSize(size.x, size.y);
+	uiTextOptionBox2->SetTextColor(D3DCOLOR_XRGB(255, 0, 0));
+	uiTextOptionBox2->SetTextFormat(DT_CENTER | DT_VCENTER);
+	uiButtonOptionBox2->AddChild(uiTextOptionBox2);
+
+	UI_Button* uiButtonOptionSphere1 = new UI_Button;
+	uiButtonOptionSphere1->SetTexture("./UI/btn-sphere-up.png", "./UI/btn-sphere-over.png", "./UI/btn-sphere-down.png");
+	uiButtonOptionSphere1->SetPosition(240, 185, 0);
+	uiImagePanelOption->AddChild(uiButtonOptionSphere1);
+
+	UI_Text* uiTextOptionSphere1 = new UI_Text;
+	uiTextOptionSphere1->SetFont(Font::GetFont(Font::BUTTON));
+	uiTextOptionSphere1->SetText("Sphere No. 1");
+	uiTextOptionSphere1->SetPosition(10, 0, 0);
+	size = uiButtonOptionSphere1->GetSize();
+	uiTextOptionSphere1->SetSize(size.x, size.y);
+	uiTextOptionSphere1->SetTextColor(D3DCOLOR_XRGB(255, 0, 0));
+	uiTextOptionSphere1->SetTextFormat(DT_CENTER | DT_VCENTER);
+	uiButtonOptionSphere1->AddChild(uiTextOptionSphere1);
+
+	UI_Button* uiButtonOptionSphere2 = new UI_Button;
+	uiButtonOptionSphere2->SetTexture("./UI/btn-sphere-up.png", "./UI/btn-sphere-over.png", "./UI/btn-sphere-down.png");
+	uiButtonOptionSphere2->SetPosition(240, 235, 0);
+	uiImagePanelOption->AddChild(uiButtonOptionSphere2);
+
+	UI_Text* uiTextOptionSphere2 = new UI_Text;
+	uiTextOptionSphere2->SetFont(Font::GetFont(Font::BUTTON));
+	uiTextOptionSphere2->SetText("Sphere No. 2");
+	uiTextOptionSphere2->SetPosition(10, 0, 0);
+	size = uiButtonOptionSphere2->GetSize();
+	uiTextOptionSphere2->SetSize(size.x, size.y);
+	uiTextOptionSphere2->SetTextColor(D3DCOLOR_XRGB(255, 0, 0));
+	uiTextOptionSphere2->SetTextFormat(DT_CENTER | DT_VCENTER);
+	uiButtonOptionSphere2->AddChild(uiTextOptionSphere2);
+
+	UI_Button* uiButtonCloseOption = new UI_Button;
+	uiButtonCloseOption->SetTexture("./UI/btnR-close-up.png", "./UI/btnR-close-over.png", "./UI/btnR-close-down.png");
+	size = uiImagePanelOption->GetSize();
+	uiButtonCloseOption->SetPosition(size.x, 10, 0);
+	uiImagePanelOption->AddChild(uiButtonCloseOption);
+
+	UI_Image* uiImagePanelFPS = new  UI_Image;
+	uiImagePanelFPS->SetTexture("./UI/panel-fps.png");
+	size = uiImageMain->GetSize();
+	pos = uiImageMain->GetPosition();
+	uiImagePanelFPS->SetPosition(size.x - 25, -pos.y, 0);
+	uiImageMain->AddChild(uiImagePanelFPS);
+
+	UI_Image* uiImagePanelQuest = new  UI_Image;
+	uiImagePanelQuest->SetTexture("./UI/panel.png");
+	size = uiImageMain->GetSize();
+	pos = uiImageMain->GetPosition();
+	uiImagePanelQuest->SetPosition(size.x - 300, -300, 0);
+	uiImageMain->AddChild(uiImagePanelQuest);
+
+	UI_Text* uiTextQuestHeading = new UI_Text;
+	uiTextQuestHeading->SetFont(Font::GetFont(Font::HEADING));
+	uiTextQuestHeading->SetText("The Quest");
+	uiTextQuestHeading->SetPosition(10, 30, 0);
+	size = uiImagePanelQuest->GetSize();
+	uiTextQuestHeading->SetSize(size.x, 50);
+	uiTextQuestHeading->SetTextColor(D3DCOLOR_XRGB(255, 0, 0));
+	uiTextQuestHeading->SetTextFormat(DT_CENTER | DT_VCENTER);
+	uiImagePanelQuest->AddChild(uiTextQuestHeading);
+
+	UI_Image* uiImageQuestGirl = new  UI_Image;
+	uiImageQuestGirl->SetTexture("./UI/girl.png");
+	uiImageQuestGirl->SetPosition(50, 50, 0);
+	uiImagePanelQuest->AddChild(uiImageQuestGirl);
+
+	UI_Text* uiTextQuestBody = new UI_Text;
+	uiTextQuestBody->SetFont(Font::GetFont(Font::BODY));
+	uiTextQuestBody->SetText("Lorem ipsum dolor sit amet,\nconsectetur adipiscing elit.\nUt venenatis cursus nibh.\nInteger mi lacus, tempor non\ndictum eget, interdum ut\nmagna. Morbi id lectus arcu,\nac sagittis nisi.");
+	uiTextQuestBody->SetPosition(190, 90, 0);
+	size = uiImagePanelQuest->GetSize();
+	uiTextQuestBody->SetSize(size.x, 200);
+	uiTextQuestBody->SetTextColor(D3DCOLOR_XRGB(100, 100, 100));
+	uiTextQuestBody->SetTextFormat(DT_LEFT);
+	uiImagePanelQuest->AddChild(uiTextQuestBody);
+
+	UI_Button* uiButtonAcceptQuest = new UI_Button;
+	uiButtonAcceptQuest->SetTexture("./UI/btn-accept-up.png", "./UI/btn-accept-over.png", "./UI/btn-accept-down.png");
+	size = uiImagePanelQuest->GetSize();
+	uiButtonAcceptQuest->SetPosition(size.x - 130, size.y - 57, 0);
+	uiImagePanelQuest->AddChild(uiButtonAcceptQuest);
+
+	UI_Button* uiButtonCloseQuest = new UI_Button;
+	uiButtonCloseQuest->SetTexture("./UI/btnL-close-up.png", "./UI/btnL-close-over.png", "./UI/btnL-close-down.png");
+	size = uiButtonCloseQuest->GetSize();
+	uiButtonCloseQuest->SetPosition(-size.x, 10, 0);
+	uiImagePanelQuest->AddChild(uiButtonCloseQuest);
 
 	Reset();
 }

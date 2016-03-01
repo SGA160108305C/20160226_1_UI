@@ -10,7 +10,8 @@ public :
 	enum FontType
 	{
 		HEADING,
-		BUTTON
+		BUTTON,
+		BODY
 	};
 
 	static Font& Get()
@@ -27,6 +28,7 @@ public :
 protected:
 	LPD3DXFONT fontHeading = nullptr;
 	LPD3DXFONT fontButton = nullptr;
+	LPD3DXFONT fontBody = nullptr;
 
 	inline LPD3DXFONT GetInstanceFont(FontType type)
 	{
@@ -37,6 +39,9 @@ protected:
 			break;
 		case Font::BUTTON:
 			return fontButton;
+			break;
+		case Font::BODY:
+			return fontBody;
 			break;
 		default:
 			break;
