@@ -32,7 +32,7 @@ void UI_Image::Render()
 	
 	UI_Manager::GetSprite()->End();
 
-	//UI_Base::Render();
+	UI_Base::Render();
 }
 
 
