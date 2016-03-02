@@ -1,5 +1,5 @@
 #pragma once
-#include <list>
+//#include <list>
 #include "GameState.h"
 #include "Grid.h"
 #include "Collider_Sphere.h"
@@ -40,7 +40,7 @@ protected:
 	ViewType viewType = GameState_UI::TOP;
 	bool isCameraSet = false;
 
-	std::list<Collider_Box*> boxList;
-	std::list<Collider_Sphere*> sphereList;
+	std::vector<Collider_Box*> boxList;
+	std::vector<Collider_Sphere*> sphereList;
 };
 

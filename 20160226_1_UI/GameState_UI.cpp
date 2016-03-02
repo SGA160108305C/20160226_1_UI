@@ -60,36 +60,21 @@ void GameState_UI::Initialize()
 	uiImageMain->SetPosition(pos.x, pos.y, 0);
 	UI_Manager::Get().SetRoot(uiImageMain);
 
-	UI_Button* uiButtonMain1 = new UI_Button;
-	uiButtonMain1->SetTexture("./UI/btn-option-up.png", "./UI/btn-option-over.png", "./UI/btn-option-down.png");
-	uiButtonMain1->SetPosition(110, 79, 0);
-	/*uiButton->OnClick = std::bind(
-	&UI_Functions::ClickTest,
-	std::ref(UI_Manager::Get().func)
-	);*/
-	/*uiButtonMain1->OnClick = std::bind(
-		&UI_Functions::CloseTarget,
-		std::ref(UI_Manager::Get().func)
-		, uiTextHeading);*/
-	uiImageMain->AddChild(uiButtonMain1);
-
-	UI_Button* uiButtonMain2 = new UI_Button;
-	uiButtonMain2->SetTexture("./UI/btn-quest-up.png", "./UI/btn-quest-over.png", "./UI/btn-quest-down.png");
-	uiButtonMain2->SetPosition(155, 79, 0);
-	/*uiButton->OnClick = std::bind(
-	&UI_Functions::ClickTest,
-	std::ref(UI_Manager::Get().func)
-	);*/
-	/*uiButtonMain2->OnClick = std::bind(
-		&UI_Functions::CloseTarget,
-		std::ref(UI_Manager::Get().func)
-		, uiTextHeading);*/
-	uiImageMain->AddChild(uiButtonMain2);
-
 	UI_Image* uiImagePanelOption = new  UI_Image;
 	uiImagePanelOption->SetTexture("./UI/panel.png");
 	uiImagePanelOption->SetPosition(-pos.x, -500, 0);
 	uiImageMain->AddChild(uiImagePanelOption);
+
+	UI_Image* uiImageOptionBox = new  UI_Image;
+	uiImageOptionBox->SetTexture("./UI/box.png");
+	uiImageOptionBox->SetPosition(80, 120, 0);
+	uiImagePanelOption->AddChild(uiImageOptionBox);
+
+	UI_Image* uiImageOptionSphere = new  UI_Image;
+	uiImageOptionSphere->SetTexture("./UI/sphere.png");
+	uiImageOptionSphere->SetPosition(83, 130, 0);
+	uiImageOptionSphere->SetShow(false);
+	uiImagePanelOption->AddChild(uiImageOptionSphere);
 
 	UI_Text* uiTextOptionHeading = new UI_Text;
 	uiTextOptionHeading->SetFont(Font::GetFont(Font::HEADING));
@@ -104,6 +89,12 @@ void GameState_UI::Initialize()
 	UI_Button* uiButtonOptionBox1 = new UI_Button;
 	uiButtonOptionBox1->SetTexture("./UI/btn-box-up.png", "./UI/btn-box-over.png", "./UI/btn-box-down.png");
 	uiButtonOptionBox1->SetPosition(240, 85, 0);
+	uiButtonOptionBox1->OnClick = std::bind(
+		&UI_Functions::ClickOptionButton,
+		std::ref(UI_Manager::Get().func),
+		uiImageOptionBox, boxList,
+		uiImageOptionSphere, sphereList,
+		BoundingVolumeType::BOUNDING_AABB, 1);
 	uiImagePanelOption->AddChild(uiButtonOptionBox1);
 
 	UI_Text* uiTextOptionBox1 = new UI_Text;
@@ -119,6 +110,10 @@ void GameState_UI::Initialize()
 	UI_Button* uiButtonOptionBox2 = new UI_Button;
 	uiButtonOptionBox2->SetTexture("./UI/btn-box-up.png", "./UI/btn-box-over.png", "./UI/btn-box-down.png");
 	uiButtonOptionBox2->SetPosition(240, 135, 0);
+	/*uiButtonOptionBox2->OnClick = std::bind(
+		&UI_Functions::CloseOpenTarget,
+		std::ref(UI_Manager::Get().func)
+		, uiImageOptionSphere, uiImageOptionBox);*/
 	uiImagePanelOption->AddChild(uiButtonOptionBox2);
 
 	UI_Text* uiTextOptionBox2 = new UI_Text;
@@ -134,6 +129,10 @@ void GameState_UI::Initialize()
 	UI_Button* uiButtonOptionSphere1 = new UI_Button;
 	uiButtonOptionSphere1->SetTexture("./UI/btn-sphere-up.png", "./UI/btn-sphere-over.png", "./UI/btn-sphere-down.png");
 	uiButtonOptionSphere1->SetPosition(240, 185, 0);
+	/*uiButtonOptionSphere1->OnClick = std::bind(
+		&UI_Functions::CloseOpenTarget,
+		std::ref(UI_Manager::Get().func)
+		, uiImageOptionBox, uiImageOptionSphere);*/
 	uiImagePanelOption->AddChild(uiButtonOptionSphere1);
 
 	UI_Text* uiTextOptionSphere1 = new UI_Text;
@@ -149,6 +148,10 @@ void GameState_UI::Initialize()
 	UI_Button* uiButtonOptionSphere2 = new UI_Button;
 	uiButtonOptionSphere2->SetTexture("./UI/btn-sphere-up.png", "./UI/btn-sphere-over.png", "./UI/btn-sphere-down.png");
 	uiButtonOptionSphere2->SetPosition(240, 235, 0);
+	/*uiButtonOptionSphere2->OnClick = std::bind(
+		&UI_Functions::CloseOpenTarget,
+		std::ref(UI_Manager::Get().func)
+		, uiImageOptionBox, uiImageOptionSphere);*/
 	uiImagePanelOption->AddChild(uiButtonOptionSphere2);
 
 	UI_Text* uiTextOptionSphere2 = new UI_Text;
@@ -165,6 +168,10 @@ void GameState_UI::Initialize()
 	uiButtonCloseOption->SetTexture("./UI/btnR-close-up.png", "./UI/btnR-close-over.png", "./UI/btnR-close-down.png");
 	size = uiImagePanelOption->GetSize();
 	uiButtonCloseOption->SetPosition(size.x, 10, 0);
+	uiButtonCloseOption->OnClick = std::bind(
+		&UI_Functions::CloseTarget,
+		std::ref(UI_Manager::Get().func)
+		, uiImagePanelOption);
 	uiImagePanelOption->AddChild(uiButtonCloseOption);
 
 	UI_Image* uiImagePanelFPS = new  UI_Image;
@@ -210,13 +217,47 @@ void GameState_UI::Initialize()
 	uiButtonAcceptQuest->SetTexture("./UI/btn-accept-up.png", "./UI/btn-accept-over.png", "./UI/btn-accept-down.png");
 	size = uiImagePanelQuest->GetSize();
 	uiButtonAcceptQuest->SetPosition(size.x - 130, size.y - 57, 0);
+	uiButtonAcceptQuest->OnClick = std::bind(
+		&UI_Functions::CloseTarget,
+		std::ref(UI_Manager::Get().func)
+		, uiImagePanelQuest);
 	uiImagePanelQuest->AddChild(uiButtonAcceptQuest);
 
 	UI_Button* uiButtonCloseQuest = new UI_Button;
 	uiButtonCloseQuest->SetTexture("./UI/btnL-close-up.png", "./UI/btnL-close-over.png", "./UI/btnL-close-down.png");
 	size = uiButtonCloseQuest->GetSize();
 	uiButtonCloseQuest->SetPosition(-size.x, 10, 0);
+	uiButtonCloseQuest->OnClick = std::bind(
+		&UI_Functions::CloseTarget,
+		std::ref(UI_Manager::Get().func)
+		, uiImagePanelQuest);
 	uiImagePanelQuest->AddChild(uiButtonCloseQuest);
+
+	UI_Button* uiButtonMain1 = new UI_Button;
+	uiButtonMain1->SetTexture("./UI/btn-option-up.png", "./UI/btn-option-over.png", "./UI/btn-option-down.png");
+	uiButtonMain1->SetPosition(110, 79, 0);
+	/*uiButton->OnClick = std::bind(
+	&UI_Functions::ClickTest,
+	std::ref(UI_Manager::Get().func)
+	);*/
+	uiButtonMain1->OnClick = std::bind(
+		&UI_Functions::OpenTarget,
+		std::ref(UI_Manager::Get().func)
+		, uiImagePanelOption);
+	uiImageMain->AddChild(uiButtonMain1);
+
+	UI_Button* uiButtonMain2 = new UI_Button;
+	uiButtonMain2->SetTexture("./UI/btn-quest-up.png", "./UI/btn-quest-over.png", "./UI/btn-quest-down.png");
+	uiButtonMain2->SetPosition(155, 79, 0);
+	/*uiButton->OnClick = std::bind(
+	&UI_Functions::ClickTest,
+	std::ref(UI_Manager::Get().func)
+	);*/
+	uiButtonMain2->OnClick = std::bind(
+	&UI_Functions::OpenTarget,
+	std::ref(UI_Manager::Get().func)
+	, uiImagePanelQuest);
+	uiImageMain->AddChild(uiButtonMain2);
 
 	Reset();
 }
@@ -254,16 +295,6 @@ void GameState_UI::Update()
 	{
 		setViewType(GameState_UI::FPS);
 		isCameraSet = false;
-	}
-
-	else if ((GetAsyncKeyState('3') & 0x8000) != 0)
-	{
-		//colliderSphere->SetDoRender(true);
-	}
-
-	else if ((GetAsyncKeyState('4') & 0x8000) != 0)
-	{
-		//colliderSphere->SetDoRender(false);
 	}
 
 	if (viewType == GameState_UI::FPS)
@@ -306,12 +337,14 @@ void GameState_UI::Update()
 		}
 		if (isCollisioin == true)
 		{
+			girl->SetCollision(true);
 			(*iter)->SetMaterialColor(D3DXCOLOR(0.f, 0.8f, 0.f, 1.0f));
 			break;
 		}
 		else
 		{
-			(*iter)->SetMaterialColor(D3DXCOLOR(0.8f, 0.8f, 0.8f, 1.0f));
+			girl->SetCollision(false);
+			(*iter)->SetMaterialColor(D3DXCOLOR(0.7f, 0.7f, 0.7f, 1.0f));
 		}
 	}
 

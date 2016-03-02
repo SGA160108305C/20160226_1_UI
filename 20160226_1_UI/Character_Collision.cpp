@@ -17,10 +17,12 @@ void Character_Collision::Initialize()
 	colliderSphere = new Collider_Sphere;
 	colliderSphere->Initialize(D3DXVECTOR3(0, 0.5f, 0), 0.75f, &world);
 	colliderSphere->SetWireRender(true);
+	colliderSphere->SetDoRender(false);
 
 	colliderBox = new Collider_Box;
 	colliderBox->Initialize(D3DXVECTOR3(-0.5f, 0.0f, -0.5f), D3DXVECTOR3(0.5f, 1.25f, 0.5f));
 	colliderBox->SetWireRender(true);
+	colliderSphere->SetDoRender(false);
 
 }
 
@@ -47,19 +49,49 @@ void Character_Collision::Update()
 	//이동 처리
 	if ((GetAsyncKeyState('A') & 0x8000) != 0)
 	{
+		lockPositionW = false;
+		lockPositionS = false;
 		rotationAngle -= (rotationSpeed * tick);
 	}
 	else if ((GetAsyncKeyState('D') & 0x8000) != 0)
 	{
+		lockPositionW = false;
+		lockPositionS = false;
 		rotationAngle += (rotationSpeed * tick);
 	}
 	if ((GetAsyncKeyState('W') & 0x8000) != 0)
 	{
-		position -= (direction * moveSpeed * tick);
+		if (!lockPositionW)
+		{
+			if (collision)
+			{
+				lockPositionW = true;
+				position = position + (direction * moveSpeed * 0.1f);
+			}
+
+			else
+			{
+				lockPositionS = false;
+				position -= (direction * moveSpeed * tick);
+			}
+		}
 	}
 	else if ((GetAsyncKeyState('S') & 0x8000) != 0)
 	{
-		position += (direction * moveSpeed * tick);
+		if (!lockPositionS)
+		{
+			if (collision)
+			{
+				lockPositionS = true;
+				position = position - (direction * moveSpeed * 0.1f);
+			}
+
+			else
+			{
+				lockPositionW = false;
+				position += (direction * moveSpeed * tick);
+			}
+		}
 	}
 
 	if ((GetAsyncKeyState(VK_SPACE) & 0x8000) != 0)
@@ -81,6 +113,16 @@ void Character_Collision::Update()
 	else
 	{
 		keyWasPressed = false;
+	}
+
+	if ((GetAsyncKeyState('3') & 0x8000) != 0)
+	{
+		colliderSphere->SetDoRender(true);
+	}
+
+	else if ((GetAsyncKeyState('4') & 0x8000) != 0)
+	{
+		colliderSphere->SetDoRender(false);
 	}
 
 	D3DXMATRIXA16 translation;

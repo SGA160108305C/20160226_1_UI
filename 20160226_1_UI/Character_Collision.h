@@ -31,5 +31,7 @@ protected:
 	BoundingBox currentBoundingBox;
 
 	bool collision = false;
+	bool lockPositionW = false;
+	bool lockPositionS = false;
 };
 
