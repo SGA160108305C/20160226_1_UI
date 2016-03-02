@@ -44,7 +44,7 @@ void Font::Initialize()
 	D3DXFONT_DESC font_desc_body;
 	ZeroMemory(&font_desc_body, sizeof(D3DXFONT_DESC));
 	font_desc_body.Height = 20;
-	font_desc_body.Width = 10;
+	font_desc_body.Width = 9;
 	font_desc_body.Weight = FW_NORMAL;
 	font_desc_body.MipLevels = D3DX_DEFAULT;
 	font_desc_body.Italic = false;

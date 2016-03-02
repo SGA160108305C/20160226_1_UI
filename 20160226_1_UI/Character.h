@@ -27,7 +27,7 @@ protected:
 
 	const float BASE_ANGLE = D3DX_PI;
 
-	float moveSpeed = 2.0f;
+	float moveSpeed = 10.0f;
 	float rotationSpeed = 2.0f;
 
 	bool keyWasPressed = false;	//스페이스만 체크

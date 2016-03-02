@@ -1,9 +1,10 @@
 #pragma once
+#include <list>
 #include "GameState.h"
 #include "Grid.h"
 #include "Collider_Sphere.h"
 #include "Collider_Box.h"
-#include "Character_MouseMove.h"
+#include "Character_Collision.h"
 #include "UI_Text.h"
 #include "UI_Image.h"
 
@@ -36,11 +37,10 @@ protected:
 	Grid* grid = nullptr;
 	Character_Collision* girl = nullptr;
 
-	Collider_Sphere* sphere = nullptr;
-	Collider_Box* box = nullptr;
-
 	ViewType viewType = GameState_UI::TOP;
 	bool isCameraSet = false;
 
+	std::list<Collider_Box*> boxList;
+	std::list<Collider_Sphere*> sphereList;
 };
 

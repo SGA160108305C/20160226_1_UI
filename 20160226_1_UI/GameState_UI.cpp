@@ -26,19 +26,29 @@ void GameState_UI::Initialize()
 		girl->Initialize();			
 	}
 	
-	if (sphere == nullptr)
-	{
-		sphere = new Collider_Sphere;
-		sphere->Initialize(D3DXVECTOR3(10, 0, 0), 3.0f);
-		sphere->SetMaterialColor(D3DXCOLOR(0, 1, 0, 1));
-	}
+	Collider_Box* box = nullptr;
+	box = new Collider_Box;
+	box->Initialize(D3DXVECTOR3(-1.0f, 0.0f, -1.0f), D3DXVECTOR3(1.0f, 2.0f, 1.0f));
+	box->SetPosition(D3DXVECTOR3(5, 0, 5));
+	box->Update();
+	boxList.push_back(box);
 
-	if (box == nullptr)
-	{
-		box = new Collider_Box;
-		box->Initialize(D3DXVECTOR3(-10, 0, 0), D3DXVECTOR3(-9, 1, 1));
-		box->SetMaterialColor(D3DXCOLOR(0, 0, 1, 1));
-	}
+	box = new Collider_Box;
+	box->Initialize(D3DXVECTOR3(-1.0f, 0.0f, -1.0f), D3DXVECTOR3(1.0f, 2.0f, 1.0f));
+	box->SetPosition(D3DXVECTOR3(-5, 0, 5));
+	box->Update();
+	boxList.push_back(box);
+
+	Collider_Sphere* sphere = nullptr;
+	sphere = new Collider_Sphere;
+	sphere->Initialize(D3DXVECTOR3(3, 1, -3), 1.0f);
+	sphere->Update();
+	sphereList.push_back(sphere);
+
+	sphere = new Collider_Sphere;
+	sphere->Initialize(D3DXVECTOR3(-3, 1, -3), 1.0f);
+	sphere->Update();
+	sphereList.push_back(sphere);
 
 	D3DXVECTOR3 pos;
 	D3DXVECTOR2 size;
@@ -213,8 +223,18 @@ void GameState_UI::Initialize()
 
 void GameState_UI::Destroy()
 {
-	SAFE_DELETE(box);
-	SAFE_DELETE(sphere);
+	for (auto iter = boxList.begin(); iter != boxList.end(); ++iter)
+	{
+		SAFE_DELETE(*iter);
+	}
+	boxList.clear();
+
+	for (auto iter = sphereList.begin(); iter != sphereList.end(); ++iter)
+	{
+		SAFE_DELETE(*iter);
+	}
+	sphereList.clear();
+
 	SAFE_DELETE(girl);
 	SAFE_DELETE(grid);	
 }
@@ -234,6 +254,16 @@ void GameState_UI::Update()
 	{
 		setViewType(GameState_UI::FPS);
 		isCameraSet = false;
+	}
+
+	else if ((GetAsyncKeyState('3') & 0x8000) != 0)
+	{
+		//colliderSphere->SetDoRender(true);
+	}
+
+	else if ((GetAsyncKeyState('4') & 0x8000) != 0)
+	{
+		//colliderSphere->SetDoRender(false);
 	}
 
 	if (viewType == GameState_UI::FPS)
@@ -263,15 +293,54 @@ void GameState_UI::Update()
 		girl->Update();
 	}
 
-	if (sphere)
+	bool isCollisioin = false;
+	for (auto iter = boxList.cbegin(); iter != boxList.cend(); ++iter)
 	{
-		sphere->Update();
+		if (girl->GetBoundingVolumeType() == BoundingVolumeType::BOUNDING_SPHERE)
+		{
+			isCollisioin = Collision::IsBoxToSphere((*iter)->GetBoundingBox(), girl->GetBoundingSphere());
+		}
+		else if (girl->GetBoundingVolumeType() == BoundingVolumeType::BOUNDING_AABB)
+		{
+			isCollisioin = Collision::IsBoxToBox(girl->GetBoundingBox(), (*iter)->GetBoundingBox());
+		}
+		if (isCollisioin == true)
+		{
+			(*iter)->SetMaterialColor(D3DXCOLOR(0.f, 0.8f, 0.f, 1.0f));
+			break;
+		}
+		else
+		{
+			(*iter)->SetMaterialColor(D3DXCOLOR(0.8f, 0.8f, 0.8f, 1.0f));
+		}
 	}
 
-	if (box)
+	if (isCollisioin == false)
 	{
-		box->Update();
+		for (auto iter = sphereList.cbegin(); iter != sphereList.cend(); ++iter)
+		{
+			if (girl->GetBoundingVolumeType() == BoundingVolumeType::BOUNDING_SPHERE)
+			{
+				isCollisioin = Collision::IsSphereToSphere(girl->GetBoundingSphere(), (*iter)->GetBoundingSphere());
+
+			}
+			else if (girl->GetBoundingVolumeType() == BoundingVolumeType::BOUNDING_AABB)
+			{
+				isCollisioin = Collision::IsBoxToSphere(girl->GetBoundingBox(), (*iter)->GetBoundingSphere());
+			}
+			if (isCollisioin == true)
+			{
+				(*iter)->SetMaterialColor(D3DXCOLOR(0.8f, 0.f, 0.f, 1.0f));
+				break;
+			}
+			else
+			{
+				(*iter)->SetMaterialColor(D3DXCOLOR(0.8f, 0.8f, 0.8f, 1.0f));
+			}
+		}
 	}
+
+	girl->SetCollision(isCollisioin);
 }
 
 void GameState_UI::Render()
@@ -286,14 +355,14 @@ void GameState_UI::Render()
 		girl->Render();
 	}
 
-	if (sphere)
+	for (auto iter = boxList.cbegin(); iter != boxList.cend(); ++iter)
 	{
-		sphere->Render();
+		(*iter)->Render();
 	}
 
-	if (box)
+	for (auto iter = sphereList.cbegin(); iter != sphereList.cend(); ++iter)
 	{
-		box->Render();
+		(*iter)->Render();
 	}
 }
 

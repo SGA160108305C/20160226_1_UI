@@ -44,7 +44,6 @@ void Character_Collision::Update()
 	D3DXVECTOR3 baseDirection(0, 0, 1);
 	D3DXVec3TransformCoord(&direction, &baseDirection, &world);
 
-
 	//이동 처리
 	if ((GetAsyncKeyState('A') & 0x8000) != 0)
 	{

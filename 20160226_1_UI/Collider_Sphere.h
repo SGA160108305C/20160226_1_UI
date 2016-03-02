@@ -13,6 +13,7 @@ public:
 	void Render();
 
 	inline void SetWireRender(bool wire){ wireMode = wire; }
+	inline void SetDoRender(bool render){ doRender = render; }
 	inline BoundingSphere& GetBoundingSphere(){ return boundingSphere; }
 
 	inline void SetMaterialColor(D3DXCOLOR& color){ material.Ambient = color; material.Diffuse = color; }
@@ -25,6 +26,7 @@ protected:
 	D3DXMATRIXA16* parent = nullptr;
 
 	bool wireMode = false;
+	bool doRender = true;
 
 	D3DMATERIAL9 material;
 };

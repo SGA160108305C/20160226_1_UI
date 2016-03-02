@@ -42,18 +42,20 @@ void Collider_Sphere::Update()
 
 void Collider_Sphere::Render()
 {
-	if (wireMode)
+	if (doRender)
 	{
-		GameManager::GetDevice()->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+		if (wireMode)
+		{
+			GameManager::GetDevice()->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+		}
+		GameManager::GetDevice()->SetRenderState(D3DRS_LIGHTING, true);
+		GameManager::GetDevice()->SetTexture(0, nullptr);
+		GameManager::GetDevice()->SetMaterial(&material);
+		GameManager::GetDevice()->SetTransform(D3DTS_WORLD, &world);
+		sphereMesh->DrawSubset(0);
+		if (wireMode)
+		{
+			GameManager::GetDevice()->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+		}
 	}
-	GameManager::GetDevice()->SetRenderState(D3DRS_LIGHTING, true);
-	GameManager::GetDevice()->SetTexture(0, nullptr);
-	GameManager::GetDevice()->SetMaterial(&material);
-	GameManager::GetDevice()->SetTransform(D3DTS_WORLD, &world);
-	sphereMesh->DrawSubset(0);
-	if (wireMode)
-	{
-		GameManager::GetDevice()->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
-	}
-
 }
