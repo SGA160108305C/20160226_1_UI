@@ -46,12 +46,36 @@ void UI_Functions::ClickOptionButton(
 		box->SetShow(false);
 		sphere->SetShow(true);
 
+		for (auto iter = boxList.cbegin(); iter != boxList.cend(); ++iter)
+		{
+			(*iter)->SetIsSelected(false);
+		}
+
+		for (auto iter = sphereList.cbegin(); iter != sphereList.cend(); ++iter)
+		{
+			(*iter)->SetIsSelected(false);
+		}
+
+		sphereList[idx]->SetIsSelected(true);
+		sphereList[idx]->SetMaterialColor(D3DXCOLOR(0.f, 0.8f, 0.f, 1.0f));
+
 		break;
 	case BOUNDING_AABB:
 		sphere->SetShow(false);
 		box->SetShow(true);
 
-		sphereList[idx]->SetMaterialColor(D3DXCOLOR(0.f, 0.8f, 0.f, 1.0f));
+		for (auto iter = sphereList.cbegin(); iter != sphereList.cend(); ++iter)
+		{
+			(*iter)->SetIsSelected(false);
+		}
+
+		for (auto iter = boxList.cbegin(); iter != boxList.cend(); ++iter)
+		{
+			(*iter)->SetIsSelected(false);
+		}
+
+		boxList[idx]->SetIsSelected(true);
+		boxList[idx]->SetMaterialColor(D3DXCOLOR(0.f, 0.8f, 0.f, 1.0f));
 
 		break;
 	default:

@@ -94,7 +94,7 @@ void GameState_UI::Initialize()
 		std::ref(UI_Manager::Get().func),
 		uiImageOptionBox, boxList,
 		uiImageOptionSphere, sphereList,
-		BoundingVolumeType::BOUNDING_AABB, 1);
+		BoundingVolumeType::BOUNDING_AABB, 0);
 	uiImagePanelOption->AddChild(uiButtonOptionBox1);
 
 	UI_Text* uiTextOptionBox1 = new UI_Text;
@@ -110,10 +110,12 @@ void GameState_UI::Initialize()
 	UI_Button* uiButtonOptionBox2 = new UI_Button;
 	uiButtonOptionBox2->SetTexture("./UI/btn-box-up.png", "./UI/btn-box-over.png", "./UI/btn-box-down.png");
 	uiButtonOptionBox2->SetPosition(240, 135, 0);
-	/*uiButtonOptionBox2->OnClick = std::bind(
-		&UI_Functions::CloseOpenTarget,
-		std::ref(UI_Manager::Get().func)
-		, uiImageOptionSphere, uiImageOptionBox);*/
+	uiButtonOptionBox2->OnClick = std::bind(
+		&UI_Functions::ClickOptionButton,
+		std::ref(UI_Manager::Get().func),
+		uiImageOptionBox, boxList,
+		uiImageOptionSphere, sphereList,
+		BoundingVolumeType::BOUNDING_AABB, 1);
 	uiImagePanelOption->AddChild(uiButtonOptionBox2);
 
 	UI_Text* uiTextOptionBox2 = new UI_Text;
@@ -129,10 +131,12 @@ void GameState_UI::Initialize()
 	UI_Button* uiButtonOptionSphere1 = new UI_Button;
 	uiButtonOptionSphere1->SetTexture("./UI/btn-sphere-up.png", "./UI/btn-sphere-over.png", "./UI/btn-sphere-down.png");
 	uiButtonOptionSphere1->SetPosition(240, 185, 0);
-	/*uiButtonOptionSphere1->OnClick = std::bind(
-		&UI_Functions::CloseOpenTarget,
-		std::ref(UI_Manager::Get().func)
-		, uiImageOptionBox, uiImageOptionSphere);*/
+	uiButtonOptionSphere1->OnClick = std::bind(
+		&UI_Functions::ClickOptionButton,
+		std::ref(UI_Manager::Get().func),
+		uiImageOptionBox, boxList,
+		uiImageOptionSphere, sphereList,
+		BoundingVolumeType::BOUNDING_SPHERE, 0);
 	uiImagePanelOption->AddChild(uiButtonOptionSphere1);
 
 	UI_Text* uiTextOptionSphere1 = new UI_Text;
@@ -148,10 +152,12 @@ void GameState_UI::Initialize()
 	UI_Button* uiButtonOptionSphere2 = new UI_Button;
 	uiButtonOptionSphere2->SetTexture("./UI/btn-sphere-up.png", "./UI/btn-sphere-over.png", "./UI/btn-sphere-down.png");
 	uiButtonOptionSphere2->SetPosition(240, 235, 0);
-	/*uiButtonOptionSphere2->OnClick = std::bind(
-		&UI_Functions::CloseOpenTarget,
-		std::ref(UI_Manager::Get().func)
-		, uiImageOptionBox, uiImageOptionSphere);*/
+	uiButtonOptionSphere2->OnClick = std::bind(
+		&UI_Functions::ClickOptionButton,
+		std::ref(UI_Manager::Get().func),
+		uiImageOptionBox, boxList,
+		uiImageOptionSphere, sphereList,
+		BoundingVolumeType::BOUNDING_SPHERE, 1);
 	uiImagePanelOption->AddChild(uiButtonOptionSphere2);
 
 	UI_Text* uiTextOptionSphere2 = new UI_Text;
@@ -338,13 +344,17 @@ void GameState_UI::Update()
 		if (isCollisioin == true)
 		{
 			girl->SetCollision(true);
-			(*iter)->SetMaterialColor(D3DXCOLOR(0.f, 0.8f, 0.f, 1.0f));
+			(*iter)->SetMaterialColor(D3DXCOLOR(0.8f, 0.f, 0.f, 1.0f));
 			break;
 		}
 		else
 		{
 			girl->SetCollision(false);
-			(*iter)->SetMaterialColor(D3DXCOLOR(0.7f, 0.7f, 0.7f, 1.0f));
+			
+			if (!((*iter)->GetIsSelected()))
+			{
+				(*iter)->SetMaterialColor(D3DXCOLOR(0.7f, 0.7f, 0.7f, 1.0f));
+			}
 		}
 	}
 
@@ -368,7 +378,10 @@ void GameState_UI::Update()
 			}
 			else
 			{
-				(*iter)->SetMaterialColor(D3DXCOLOR(0.8f, 0.8f, 0.8f, 1.0f));
+				if (!((*iter)->GetIsSelected()))
+				{
+					(*iter)->SetMaterialColor(D3DXCOLOR(0.7f, 0.7f, 0.7f, 1.0f));
+				}
 			}
 		}
 	}

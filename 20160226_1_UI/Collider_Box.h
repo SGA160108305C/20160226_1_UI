@@ -15,7 +15,10 @@ public:
 	inline void SetParent(D3DXMATRIXA16* _parent){ parent = _parent; }
 	inline void SetWireRender(bool wire){ wireMode = wire; }
 	inline void SetPosition(D3DXVECTOR3& pos){ position = pos; }
+	inline void SetIsSelected(bool selected) { isSelected = selected; }
+
 	inline BoundingBox& GetBoundingBox(){ return currentBoundingBox; }
+	inline bool GetIsSelected() { return isSelected; }
 
 	inline void SetMaterialColor(D3DXCOLOR& color){ material.Ambient = color; material.Diffuse = color; }
 
@@ -30,6 +33,7 @@ protected:
 	D3DXMATRIXA16* parent = nullptr;	//rotation Á¦¿Ü
 
 	bool wireMode = false;
+	bool isSelected = false;
 
 	D3DXVECTOR3 position = D3DXVECTOR3(0, 0, 0);
 
