@@ -38,6 +38,7 @@ protected:
 	bool isSelected = false;
 
 	D3DXVECTOR3 position = D3DXVECTOR3(0, 0, 0);
+	D3DXVECTOR3 direction = D3DXVECTOR3(0, 0, 0);
 
 	D3DMATERIAL9 material;
 

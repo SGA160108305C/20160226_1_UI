@@ -40,6 +40,9 @@ void Collider_Box::Update()
 	world *= rotation;
 	printf_s("test: %.2f\n", rotationAngle);
 
+	D3DXVECTOR3 baseDirection(0, 0, 1);
+	D3DXVec3TransformCoord(&direction, &baseDirection, &world);
+
 	D3DXMatrixTranslation(&world, position.x, position.y + baseHeight, position.z);
 
 	if (parent)
