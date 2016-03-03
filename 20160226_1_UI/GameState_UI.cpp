@@ -292,6 +292,8 @@ void GameState_UI::Reset()
 
 void GameState_UI::Update()
 {
+	float tick = (float)GameManager::GetTick();
+
 	if ((GetAsyncKeyState('1') & 0x8000) != 0)
 	{
 		setViewType(GameState_UI::TOP);
@@ -333,6 +335,26 @@ void GameState_UI::Update()
 	bool isCollisioin = false;
 	for (auto iter = boxList.cbegin(); iter != boxList.cend(); ++iter)
 	{
+		if ((*iter)->GetIsSelected())
+		{
+			if ((GetAsyncKeyState('J') & 0x8000) != 0)
+			{
+				//rotationAngle -= (rotationSpeed * tick);
+			}
+			else if ((GetAsyncKeyState('L') & 0x8000) != 0)
+			{
+				(*iter)->setInstanceRotation(rotationSpeed * tick);
+			}
+			if ((GetAsyncKeyState('I') & 0x8000) != 0)
+			{
+				(*iter)->setInstancePosition(-(direction * moveSpeed * tick));
+			}
+			else if ((GetAsyncKeyState('K') & 0x8000) != 0)
+			{
+				(*iter)->setInstancePosition(direction * moveSpeed * tick);
+			}
+		}
+
 		if (girl->GetBoundingVolumeType() == BoundingVolumeType::BOUNDING_SPHERE)
 		{
 			isCollisioin = Collision::IsBoxToSphere((*iter)->GetBoundingBox(), girl->GetBoundingSphere());
@@ -356,6 +378,8 @@ void GameState_UI::Update()
 				(*iter)->SetMaterialColor(D3DXCOLOR(0.7f, 0.7f, 0.7f, 1.0f));
 			}
 		}
+
+		(*iter)->Update();
 	}
 
 	if (isCollisioin == false)
@@ -383,6 +407,8 @@ void GameState_UI::Update()
 					(*iter)->SetMaterialColor(D3DXCOLOR(0.7f, 0.7f, 0.7f, 1.0f));
 				}
 			}
+
+			(*iter)->Update();
 		}
 	}
 

@@ -15,6 +15,8 @@ public:
 	inline void SetParent(D3DXMATRIXA16* _parent){ parent = _parent; }
 	inline void SetWireRender(bool wire){ wireMode = wire; }
 	inline void SetPosition(D3DXVECTOR3& pos){ position = pos; }
+	inline void setInstancePosition(D3DXVECTOR3 pos) { position -= pos; }
+	inline void setInstanceRotation(float angle) { rotationAngle -= angle; }
 	inline void SetIsSelected(bool selected) { isSelected = selected; }
 
 	inline BoundingBox& GetBoundingBox(){ return currentBoundingBox; }
@@ -38,5 +40,8 @@ protected:
 	D3DXVECTOR3 position = D3DXVECTOR3(0, 0, 0);
 
 	D3DMATERIAL9 material;
+
+	const float BASE_ANGLE = D3DX_PI;
+	float rotationAngle = 0.0f;
 };
 

@@ -42,5 +42,13 @@ protected:
 
 	std::vector<Collider_Box*> boxList;
 	std::vector<Collider_Sphere*> sphereList;
+
+	const float BASE_ANGLE = D3DX_PI;
+	float rotationAngle = 0.0f;
+
+	float moveSpeed = 5.0f;
+	float rotationSpeed = 2.0f;
+
+	D3DXVECTOR3 direction = D3DXVECTOR3(0, 0, 1);
 };
 
