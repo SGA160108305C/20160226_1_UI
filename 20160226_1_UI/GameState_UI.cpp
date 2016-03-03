@@ -337,21 +337,24 @@ void GameState_UI::Update()
 	{
 		if ((*iter)->GetIsSelected())
 		{
-			if ((GetAsyncKeyState('J') & 0x8000) != 0)
-			{
-				//rotationAngle -= (rotationSpeed * tick);
-			}
-			else if ((GetAsyncKeyState('L') & 0x8000) != 0)
-			{
-				(*iter)->setInstanceRotation(rotationSpeed * tick);
-			}
 			if ((GetAsyncKeyState('I') & 0x8000) != 0)
 			{
-				(*iter)->setInstancePosition(-(direction * moveSpeed * tick));
+				(*iter)->setInstancePosition(-(directionFB * moveSpeed * tick));
 			}
+
 			else if ((GetAsyncKeyState('K') & 0x8000) != 0)
 			{
-				(*iter)->setInstancePosition(direction * moveSpeed * tick);
+				(*iter)->setInstancePosition(directionFB * moveSpeed * tick);
+			}
+
+			else if ((GetAsyncKeyState('L') & 0x8000) != 0)
+			{
+				(*iter)->setInstancePosition(-(directionLR * moveSpeed * tick));
+			}
+
+			else if ((GetAsyncKeyState('J') & 0x8000) != 0)
+			{
+				(*iter)->setInstancePosition(directionLR * moveSpeed * tick);
 			}
 		}
 

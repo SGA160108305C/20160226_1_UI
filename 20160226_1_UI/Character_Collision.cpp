@@ -39,7 +39,7 @@ void Character_Collision::Update()
 	float tick = (float)GameManager::GetTick();
 
 	D3DXMatrixIdentity(&world);
-	D3DXMATRIX rotation;
+	D3DXMATRIXA16 rotation;
 	D3DXMatrixRotationY(&rotation, rotationAngle + BASE_ANGLE);
 	world *= rotation;
 

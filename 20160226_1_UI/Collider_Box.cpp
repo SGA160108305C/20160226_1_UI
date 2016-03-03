@@ -35,20 +35,13 @@ void Collider_Box::Destroy()
 
 void Collider_Box::Update()
 {
-	D3DXMATRIX rotation;
-	D3DXMatrixRotationY(&rotation, rotationAngle + BASE_ANGLE);
-	world *= rotation;
-	printf_s("test: %.2f\n", rotationAngle);
-
-	D3DXVECTOR3 baseDirection(0, 0, 1);
-	D3DXVec3TransformCoord(&direction, &baseDirection, &world);
-
 	D3DXMatrixTranslation(&world, position.x, position.y + baseHeight, position.z);
 
 	if (parent)
 	{
 		world *= (*parent);
 	}
+
 	D3DXVec3TransformCoord(&currentBoundingBox.min, &boundingBox.min, &world);
 	D3DXVec3TransformCoord(&currentBoundingBox.max, &boundingBox.max, &world);
 }

@@ -49,6 +49,7 @@ protected:
 	float moveSpeed = 5.0f;
 	float rotationSpeed = 2.0f;
 
-	D3DXVECTOR3 direction = D3DXVECTOR3(0, 0, 1);
+	D3DXVECTOR3 directionFB = D3DXVECTOR3(0, 0, 1);
+	D3DXVECTOR3 directionLR = D3DXVECTOR3(1, 0, 0);
 };
 
