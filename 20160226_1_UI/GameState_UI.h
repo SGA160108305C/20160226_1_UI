@@ -51,5 +51,6 @@ protected:
 
 	D3DXVECTOR3 directionFB = D3DXVECTOR3(0, 0, 1);
 	D3DXVECTOR3 directionLR = D3DXVECTOR3(1, 0, 0);
+	D3DXVECTOR3 colliderSphereCenter = D3DXVECTOR3(0, 0, 0);
 };
 

@@ -389,6 +389,29 @@ void GameState_UI::Update()
 	{
 		for (auto iter = sphereList.cbegin(); iter != sphereList.cend(); ++iter)
 		{
+			if ((*iter)->GetIsSelected())
+			{
+				if ((GetAsyncKeyState('I') & 0x8000) != 0)
+				{
+					(*iter)->GetBoundingSphere().center += (directionFB * moveSpeed * tick);
+				}
+
+				else if ((GetAsyncKeyState('K') & 0x8000) != 0)
+				{
+					(*iter)->GetBoundingSphere().center -= (directionFB * moveSpeed * tick);
+				}
+
+				else if ((GetAsyncKeyState('L') & 0x8000) != 0)
+				{
+					(*iter)->GetBoundingSphere().center += (directionLR * moveSpeed * tick);
+				}
+
+				else if ((GetAsyncKeyState('J') & 0x8000) != 0)
+				{
+					(*iter)->GetBoundingSphere().center -= (directionLR * moveSpeed * tick);
+				}
+			}
+
 			if (girl->GetBoundingVolumeType() == BoundingVolumeType::BOUNDING_SPHERE)
 			{
 				isCollisioin = Collision::IsSphereToSphere(girl->GetBoundingSphere(), (*iter)->GetBoundingSphere());

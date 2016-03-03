@@ -34,6 +34,7 @@ void Collider_Sphere::Destroy()
 void Collider_Sphere::Update()
 {
 	D3DXMatrixTranslation(&world, boundingSphere.center.x, boundingSphere.center.y, boundingSphere.center.z);
+
 	if (parent)
 	{
 		world *= (*parent);
