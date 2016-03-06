@@ -4,9 +4,9 @@
 #include "Grid.h"
 #include "Collider_Sphere.h"
 #include "Collider_Box.h"
-#include "Character_Collision.h"
 #include "UI_Text.h"
 #include "UI_Image.h"
+#include "Character_MouseMove.h"
 
 class GameState_UI :
 	public GameState
@@ -35,7 +35,7 @@ public:
 
 protected:
 	Grid* grid = nullptr;
-	Character_Collision* girl = nullptr;
+	Character_MouseMove* girl = nullptr;
 
 	ViewType viewType = GameState_UI::TOP;
 	bool isCameraSet = false;

@@ -22,8 +22,9 @@ void GameState_UI::Initialize()
 	}	
 	if ( girl == nullptr )
 	{
-		girl = new Character_Collision;
-		girl->Initialize();			
+		girl = new Character_MouseMove;
+		girl->Initialize();
+		girl->SetGrid(grid);
 	}
 	
 	Collider_Box* box = nullptr;
