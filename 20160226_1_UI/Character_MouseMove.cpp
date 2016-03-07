@@ -62,6 +62,7 @@ LRESULT Character_MouseMove::InputProc(HWND hWnd, UINT message, WPARAM wParam, L
 							move->SetStart(position);
 							move->SetGoal(target);
 							move->SetTarget(this);
+							this->SetCollision(false);
 							move->SetDurationTime(0.1f*length);
 							move->Start();
 							SetAction(move);

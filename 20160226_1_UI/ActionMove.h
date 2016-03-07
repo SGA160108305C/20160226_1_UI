@@ -19,6 +19,7 @@ public:
 protected:
 	D3DXVECTOR3 start = D3DXVECTOR3(0, 0, 0);
 	D3DXVECTOR3 goal = D3DXVECTOR3(0, 0, 0);
+	D3DXVECTOR3 pos = D3DXVECTOR3(0, 0, 0);
 
 	float passedTime = 0.0f;
 	float durationTime = 0.0f;
