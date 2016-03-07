@@ -197,9 +197,6 @@
     <ClCompile Include="UI_Manager.cpp" />
     <ClCompile Include="UI_Text.cpp" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="Base_3D.vcxproj" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
