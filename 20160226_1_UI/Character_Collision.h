@@ -30,7 +30,7 @@ protected:
 	Collider_Box* colliderBox = nullptr;
 	BoundingBox currentBoundingBox;
 
-	bool collision = false;
+	//bool collision = false;
 	bool lockPositionW = false;
 	bool lockPositionS = false;
 };

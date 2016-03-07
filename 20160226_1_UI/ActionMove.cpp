@@ -51,6 +51,13 @@ void ActionMove::Update()
 		return;
 
 	passedTime += (float)GameManager::GetTick();
+
+	if (target->getCollision())
+	{
+		durationTime = passedTime - 0.00001f;
+
+	}
+
 	if (passedTime > durationTime)
 	{
 		target->SetPosition(goal);
@@ -63,6 +70,7 @@ void ActionMove::Update()
 	}
 
 	D3DXVECTOR3 pos;
+
 	D3DXVec3Lerp(&pos, &start, &goal, passedTime / durationTime);
 	target->SetPosition(pos);
 }

@@ -7,6 +7,8 @@ public:
 	Character_MouseMove();
 	virtual ~Character_MouseMove();
 
+	inline bool getCollision() { return collision; }
+
 	virtual LRESULT InputProc(
 		HWND hWnd, UINT message, 
 		WPARAM wParam, LPARAM lParam) override;

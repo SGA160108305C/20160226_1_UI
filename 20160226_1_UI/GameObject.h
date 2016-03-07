@@ -18,11 +18,14 @@ public:
 	inline void SetAngle(const float angle){ rotationAngle = angle; }
 	inline void SetAction(ActionBase* _action){ action = _action; }
 	inline float* getRotationAngleAddress() { return &rotationAngle; }
+	inline virtual bool getCollision() { return collision; }
 	
 protected:
 	D3DXVECTOR3	position = D3DXVECTOR3(0, 0, 0);
 	D3DXVECTOR3	direction = D3DXVECTOR3(0, 0, 0);
 	float rotationAngle = 0.0f;
+
+	bool collision = false;
 	
 	ActionBase* action = nullptr;
 };
